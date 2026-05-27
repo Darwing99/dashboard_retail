@@ -1,6 +1,12 @@
 # Dashboard Retail - Análisis de Ventas y Comportamiento
 
-**Autor:** DARWING RODILSO HERNANDEZ\
+**Autores:** 
+- Gissela Jocelyne Grandez Berrios
+
+- Darwing Hernandez Castellanos
+
+- Daniel Alexander Cuellar
+
 **Tipo:** Proyecto de Data Science - Dashboard Shiny Interactivo\
 **Sector:** Retail - Análisis de ventas y predicción de comportamiento de clientes
 
@@ -352,17 +358,12 @@ Este proyecto es de uso académico y educativo.
 
 ------------------------------------------------------------------------
 
-## Autor
+## Autores
+- Gissela Jocelyne Grandez Berrios
 
-**DARWING RODILSO HERNANDEZ**
+- Darwing Hernandez Castellanos
 
-**DARWING RODILSO HERNANDEZ**
-
-**DARWING RODILSO HERNANDEZ**
-
-**DARWING RODILSO HERNANDEZ**
-
-**DARWING RODILSO HERNANDEZ**
+- Daniel Alexander Cuellar
 
 ------------------------------------------------------------------------
 
