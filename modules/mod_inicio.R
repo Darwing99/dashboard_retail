@@ -54,6 +54,12 @@ mod_inicio_ui <- function(id) {
           solidHeader = TRUE,
           width       = 12,
           p("Este dashboard interactivo realiza un análisis integral del comportamiento de compra de clientes en retail."),
+          p("Autores"),
+          tags$ul(
+            tags$li("Gissela Jocelyne Grandez Berrios"),
+            tags$li("Darwing Hernandez Castellanos"),
+            tags$li("Daniel Alexander Cuellar")
+          ),
           p("Usa navegación a través de las pestañas para explorar:"),
           tags$ul(
             tags$li("F1 Negocio: métricas y KPIs principales"),

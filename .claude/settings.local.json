@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Darwing Hernandez\\\\Desktop\\\\Data Science\\\\Programacion en R\\\\dashboard_retail\" -Recurse)",
-      "Bash(Select-Object -Property FullName)",
-      "Bash(Sort-Object FullName)"
-    ]
-  }
-}
