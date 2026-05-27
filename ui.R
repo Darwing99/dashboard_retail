@@ -11,12 +11,8 @@ ui <- shinydashboard::dashboardPage(
       icon("shopping-cart"),
       " Análisis Retail Dashboard"
     ),
-    titleWidth = 350,
-    tags$li(
-      class = "dropdown",
-      style = "padding: 10px 15px;",
-      p("DARWING H.", style = "color: white; margin: 0;")
-    )
+    titleWidth = 350
+   
   ),
 
   # =========== SIDEBAR ===========

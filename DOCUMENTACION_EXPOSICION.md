@@ -1,9 +1,6 @@
----
+------------------------------------------------------------------------
 
-editor_options: 
-  markdown: 
-    wrap: 72
----
+editor_options: markdown: wrap: 72 ---
 
 # Dashboard de Análisis Retail — Documentación para Exposición
 
@@ -138,7 +135,7 @@ Datos crudos (CSV/Excel)
 **Enriquecimiento:**
 
 | Campo nuevo | Fórmula |
-|------------------------------------|------------------------------------|
+|----|----|
 | `Revenue` | `Quantity × Price` |
 | `Año`, `Mes`, `Trimestre` | Extraídos de `InvoiceDate` |
 | `Día_Semana`, `Hora` | Extraídos de `InvoiceDate` |
@@ -185,7 +182,7 @@ RFM es un método de segmentación basado en el comportamiento histórico de com
 ### Las 3 dimensiones RFM
 
 | Dimensión | Definición | Cálculo |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Recencia (R)** | ¿Cuándo compró por última vez? | Días desde la última transacción |
 | **Frecuencia (F)** | ¿Con qué frecuencia compra? | Número de facturas distintas |
 | **Monetario (M)** | ¿Cuánto ha gastado en total? | Suma acumulada de Revenue |
@@ -197,7 +194,7 @@ Cada dimensión se convierte a un **score del 1 al 5** usando quintiles: - **5**
 ### Los 7 Segmentos de Clientes
 
 | Segmento | Criterio | Significado estratégico |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Campeones** | R≥4, F≥4, M≥4 | Clientes VIP: compraron recientemente, compran mucho y gastan mucho |
 | **Clientes Leales** | R≥3, F≥3 | Compran con regularidad y son recientes |
 | **Clientes Recientes** | R≥4, F≤2 | Nuevos o esporádicos pero activos recientemente |
@@ -257,7 +254,7 @@ La pestaña **F5 - Evaluación** presenta las métricas de desempeño en el conj
 ### Métricas clave
 
 | Métrica | Definición | Interpretación |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Accuracy** | \% de predicciones correctas | Correctitud general del modelo |
 | **Sensibilidad** | \% de "En_Riesgo" correctamente identificados | Capacidad de detectar churn |
 | **Especificidad** | \% de "Activos" correctamente identificados | Capacidad de confirmar clientes sanos |
@@ -276,7 +273,7 @@ Visualiza los 4 casos posibles de clasificación: - **Verdadero Positivo (VP):**
 ## 10. Pestañas del Dashboard
 
 | Pestaña | Contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | **Inicio** | KPIs generales: clientes totales, revenue, transacciones, % cancelaciones |
 | **F1 - Negocio** | Ventas en el tiempo, top países, top productos, análisis trimestral |
 | **F2 - EDA** | Exploración estadística, heatmaps, distribuciones |
@@ -291,7 +288,7 @@ Visualiza los 4 casos posibles de clasificación: - **Verdadero Positivo (VP):**
 ## 11. Stack Tecnológico
 
 | Categoría | Librería | Propósito |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Framework web** | `shiny`, `shinydashboard` | App web interactiva |
 | **Machine Learning** | `caret`, `randomForest`, `pROC` | Modelado y evaluación |
 | **Visualización** | `plotly` | Gráficos interactivos |
@@ -332,7 +329,7 @@ Visualiza los 4 casos posibles de clasificación: - **Verdadero Positivo (VP):**
 Generadas automáticamente en la pestaña RFM:
 
 | Segmento | Estrategia recomendada | Canal | Prioridad |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Campeones | Programas de lealtad VIP, acceso anticipado | Email + App | Alta |
 | Clientes Leales | Descuentos exclusivos, encuestas de satisfacción | Email | Alta |
 | Clientes Recientes | Onboarding, segunda compra con incentivo | Push / Email | Media |
