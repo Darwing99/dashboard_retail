@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libharfbuzz-dev \
     libfribidi-dev \
     libgit2-dev \
+    libmagick++-dev \
     pandoc \
     && rm -rf /var/lib/apt/lists/*
 
