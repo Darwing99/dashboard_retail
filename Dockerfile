@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfribidi-dev \
     libgit2-dev \
     libmagick++-dev \
+    tcl8.6-dev \
+    tk8.6-dev \
     pandoc \
     && rm -rf /var/lib/apt/lists/*
 
