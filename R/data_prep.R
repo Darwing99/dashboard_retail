@@ -2,36 +2,53 @@
 # R/DATA_PREP.R - FUNCIONES DE CARGA Y PREPARACIÓN DE DATOS
 # =============================================================================
 
-#' Carga dataset de retail desde Excel
+#' Carga dataset de retail desde CSV o Excel
 #'
-#' Lee el archivo online_retail_II.xlsx y retorna un data.frame.
+#' Lee el archivo indicado (.csv o .xlsx) y retorna un data.frame.
 #' Si el archivo no existe, genera datos simulados.
 #'
-#' @param archivo ruta al archivo Excel (default "online_retail_II.xlsx")
+#' @param archivo ruta al archivo (.csv o .xlsx)
 #' @return data.frame con datos crudos
-#' 
+#'
 #' @details
-#' Intenta leer la hoja "page" del Excel.
-#' Si falla, crea un dataset simulado para demostración.
-cargar_datos <- function(archivo = "online_retail_II.xlsx") {
-  if (file.exists(archivo)) {
-    tryCatch({
-      df1 <- readxl::read_excel(archivo, sheet = "page")
-      raw <- dplyr::bind_rows(df1)
-      cat("Dataset cargado desde:", archivo, "\n")
-      return(raw)
-    }, error = function(e) {
-      warning(paste(
-        "No se pudo leer el Excel (", conditionMessage(e), ").",
-        "Generando datos simulados..."
-      ))
-      return(generar_datos_simulados())
-    })
-  } else {
+#' Detecta la extensión automáticamente:
+#'   - .csv  → read.csv() con encoding UTF-8
+#'   - .xlsx → readxl::read_excel(), hoja "Year 2009-2010" o "page"
+#' Si el archivo no existe o falla la lectura, genera datos simulados.
+cargar_datos <- function(archivo = "data/online_retail_II.csv") {
+  if (!file.exists(archivo)) {
     cat("! Archivo no encontrado:", archivo, "\n")
     cat("  Generando datos simulados para demostración...\n")
     return(generar_datos_simulados())
   }
+
+  extension <- tolower(tools::file_ext(archivo))
+
+  tryCatch({
+    raw <- if (extension == "csv") {
+      cat("Leyendo CSV:", archivo, "\n")
+      read.csv(archivo, stringsAsFactors = FALSE, encoding = "UTF-8")
+    } else if (extension %in% c("xlsx", "xls")) {
+      cat("Leyendo Excel:", archivo, "\n")
+      # Intenta la hoja "Year 2009-2010"; si no existe, prueba "page"
+      hojas <- readxl::excel_sheets(archivo)
+      hoja  <- if ("Year 2009-2010" %in% hojas) "Year 2009-2010" else hojas[1]
+      readxl::read_excel(archivo, sheet = hoja)
+    } else {
+      stop("Formato no soportado. Usa .csv o .xlsx")
+    }
+
+    # Normalizar nombre de columna: "Customer ID" → "CustomerID"
+    names(raw) <- gsub("Customer ID", "CustomerID", names(raw), fixed = TRUE)
+
+    cat("Dataset cargado:", nrow(raw), "filas,", ncol(raw), "columnas\n")
+    return(as.data.frame(raw))
+
+  }, error = function(e) {
+    warning(paste("Error al leer el archivo:", conditionMessage(e),
+                  "— Generando datos simulados..."))
+    return(generar_datos_simulados())
+  })
 }
 
 #' Genera dataset simulado para demostración

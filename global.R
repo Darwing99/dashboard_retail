@@ -64,7 +64,7 @@ cat("\n")
 
 # --- Cargar y preparar datos ---
 cat("Cargando datos...\n")
-retail_raw <- cargar_datos(archivo = "data/online_retail_II.xlsx")
+retail_raw <- cargar_datos(archivo = "data/online_retail_II.csv")
 
 cat("Limpiando datos...\n")
 retail_clean <- limpiar_datos(retail_raw)
