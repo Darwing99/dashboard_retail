@@ -18,6 +18,9 @@ library(randomForest)
 library(pROC)
 library(corrplot)
 library(readxl)
+library(summarytools)
+library(stringr)
+library(ggplot2)
 
 # =========== CARGAR FUNCIONES PERSONALIZADAS ===========
 # Helpers: colores, funciones de formato, utilidades
@@ -95,7 +98,7 @@ cat("✓ Modelo entrenado | AUC: ", auc_val, " | Accuracy: ", acc_pct, "\n", sep
 total_clientes <- n_distinct(retail_raw$CustomerID)
 total_transacciones <- nrow(retail_raw)
 total_revenue <- sum(retail_clean$Revenue, na.rm = TRUE)
-cancelaciones <- sum(grepl("^C", retail_raw$Invoice))
+cancelaciones <- sum(stringr::str_detect(retail_raw$Invoice, "^C"))
 pct_cancelaciones <- round(cancelaciones / nrow(retail_raw) * 100, 2)
 
 cat("✓ Total clientes: ", total_clientes, "\n", sep = "")

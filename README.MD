@@ -91,7 +91,8 @@ Opción B: **Manual con install.packages**
 paquetes <- c(
   "shiny", "shinydashboard", "DT", "plotly",
   "tidyverse", "tibble", "lubridate", "scales",
-  "caret", "randomForest", "pROC", "readxl", "corrplot"
+  "caret", "randomForest", "pROC", "readxl", "corrplot",
+  "summarytools", "stringr", "ggplot2"
 )
 install.packages(paquetes)
 ```
@@ -138,10 +139,14 @@ Se abrirá un navegador en `http://localhost:3838/`
 
 ### 3. **📈 F2: Datos (EDA)**
 
-- Resumen estadístico
-- Distribución de revenue
-- Análisis por país
-- Variables y correlaciones
+- Resumen estadístico (min, máx, media, mediana)
+- Distribución de revenue e histograma de cantidad (Plotly)
+- **Histograma de Revenue con ggplot2** (hasta percentil 95)
+- **Boxplot de Revenue por Segmento de Precio con ggplot2**
+- **Resumen estadístico detallado con summarytools::dfSummary()**
+- Heatmap de actividad Hora × Día de la semana
+- Revenue por segmento de precio en el tiempo
+- Análisis por país (Top 10)
 
 ### 4. **🔧 F3: Wrangling**
 
@@ -183,31 +188,37 @@ Se abrirá un navegador en `http://localhost:3838/`
 
 ```         
 1. CARGA DE DATOS (global.R)
-   └── online_retail_II.xlsx
-   
-2. LIMPIEZA (data_prep.R)
-   ├── Remover cancelaciones
+   └── online_retail_II.xlsx / datos simulados
+
+2. LIMPIEZA (data_prep.R) — usando stringr + dplyr
+   ├── Remover cancelaciones (stringr::str_detect)
    ├── Validar valores positivos
-   ├── Parse de fechas
+   ├── Parse de fechas (lubridate)
    └── Enriquecimiento (Revenue, Segmento_Precio)
-   
-3. CÁLCULO RFM (data_prep.R)
+
+3. CÁLCULO RFM (data_prep.R) — usando dplyr + tidyr
    ├── Recencia (días desde última compra)
    ├── Frecuencia (número de compras)
    ├── Monetario (valor total gastado)
    └── Segmentación (7 segmentos de cliente)
-   
-4. ENTRENAMIENTO MODELO (modelo.R)
+
+4. EDA (mod_eda.R) — usando ggplot2 + summarytools + plotly
+   ├── Histograma Revenue (ggplot2)
+   ├── Boxplot por Segmento (ggplot2)
+   ├── Resumen dfSummary (summarytools)
+   └── Heatmaps y distribuciones (plotly)
+
+5. ENTRENAMIENTO MODELO (modelo.R) — usando caret + randomForest
    ├── Split 75/25 train/test
    ├── Random Forest (ntree=200, mtry=3)
    └── Evaluación: Accuracy, AUC, Confusion Matrix
-   
-5. VISUALIZACIÓN (plots.R)
+
+6. VISUALIZACIÓN (plots.R) — usando plotly
    ├── Gráficos de negocio
    ├── Gráficos del modelo
    └── Gráficos RFM
-   
-6. TABLAS (tablas.R)
+
+7. TABLAS (tablas.R) — usando DT
    ├── Tabla de recomendaciones
    ├── Tabla RFM de clientes
    └── Tabla raw de transacciones
@@ -310,17 +321,24 @@ install.packages("nombre_paquete")
 
 ## 📚 Librerías Utilizadas
 
-| Librería       | Versión    | Uso                   |
-|----------------|------------|-----------------------|
-| shiny          | \>= 1.7.0  | Framework web         |
-| shinydashboard | \>= 0.7.2  | Plantilla dashboard   |
-| plotly         | \>= 4.10.0 | Gráficos interactivos |
-| tidyverse      | \>= 1.3.1  | Data wrangling        |
-| randomForest   | \>= 4.7    | Modelado RF           |
-| caret          | \>= 6.0    | Validación modelo     |
-| DT             | \>= 0.20   | Tablas interactivas   |
-| lubridate      | \>= 1.8.0  | Manejo fechas         |
-| scales         | \>= 1.2.0  | Formatos números      |
+| Librería       | Versión    | Uso                                        |
+|----------------|------------|--------------------------------------------|
+| shiny          | >= 1.7.0   | Framework web interactivo                  |
+| shinydashboard | >= 0.7.2   | Plantilla dashboard                        |
+| plotly         | >= 4.10.0  | Gráficos interactivos (EDA, negocio, RFM)  |
+| ggplot2        | >= 3.4.0   | Histograma y boxplot estáticos (EDA F2)    |
+| tidyverse      | >= 1.3.1   | Ecosistema data wrangling                  |
+| stringr        | >= 1.5.0   | Limpieza de texto (detección cancelaciones)|
+| tidyr          | >= 1.3.0   | Pivotado de tablas (matriz de confusión)   |
+| dplyr          | >= 1.1.0   | Transformación y agregación de datos       |
+| lubridate      | >= 1.8.0   | Parsing y extracción de fechas             |
+| summarytools   | >= 1.0.0   | Resumen estadístico descriptivo (EDA F2)   |
+| randomForest   | >= 4.7     | Modelo de clasificación Random Forest      |
+| caret          | >= 6.0     | Split train/test y métricas de evaluación  |
+| pROC           | >= 1.18    | Curva ROC y cálculo de AUC                 |
+| DT             | >= 0.20    | Tablas interactivas con filtros            |
+| scales         | >= 1.2.0   | Formato de números y monedas               |
+| readxl         | >= 1.4.0   | Lectura de archivos Excel (.xlsx)          |
 
 ------------------------------------------------------------------------
 
@@ -373,4 +391,4 @@ Para preguntas o reportar bugs, crear un issue en el repositorio.
 
 ------------------------------------------------------------------------
 
-**Última actualización:** Mayo 2024
+**Última actualización:** Mayo 2026

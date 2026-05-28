@@ -204,3 +204,59 @@ dashboard_retail/
 - **Escalabilidad:** agregar una nueva pestaña = crear un nuevo `mod_X.R` y dos líneas en `ui.R` / `server.R`.
 - **Aislamiento de IDs:** `ns()` previene colisiones entre los IDs de outputs de distintos módulos.
 - **Testabilidad:** cada módulo puede probarse de forma aislada.
+
+---
+
+## Actualización: Integración de librerías CRISP-DM (27 de mayo de 2026)
+
+**Autor:** Darwing Hernández
+
+Se integraron las librerías faltantes para cumplir con los requisitos de la metodología CRISP-DM exigidos por el enunciado del proyecto.
+
+### Cambios en `global.R`
+
+Agregadas 3 librerías explícitas al bloque de carga:
+
+```r
+library(summarytools)  # Resumen estadístico descriptivo (Fase 2 EDA)
+library(stringr)       # Manipulación de texto (Fase 3 Wrangling)
+library(ggplot2)       # Gráficos estáticos (Fase 2 EDA)
+```
+
+> Nota: `stringr` y `ggplot2` forman parte del ecosistema `tidyverse`, pero se declaran explícitamente para documentar su uso conforme al enunciado.
+
+### Cambios en `R/data_prep.R` y `global.R`
+
+Reemplazado `grepl()` (base R) por `stringr::str_detect()` en todos los puntos donde se detectan cancelaciones:
+
+```r
+# Antes (base R):
+!grepl("^C", Invoice)
+sum(grepl("^C", retail_raw$Invoice))
+
+# Después (stringr):
+!stringr::str_detect(Invoice, "^C")
+sum(stringr::str_detect(retail_raw$Invoice, "^C"))
+```
+
+### Cambios en `modules/mod_eda.R`
+
+Agregados 3 bloques nuevos al final del tab F2 - EDA:
+
+| Elemento nuevo | Función R | Output Shiny |
+|---|---|---|
+| Histograma de Revenue | `ggplot2::geom_histogram()` | `plotOutput("gg_histograma")` |
+| Boxplot por Segmento de Precio | `ggplot2::geom_boxplot()` | `plotOutput("gg_boxplot")` |
+| Resumen estadístico detallado | `summarytools::dfSummary()` | `verbatimTextOutput("eda_summarytools")` |
+
+### Cobertura de librerías del enunciado tras la actualización
+
+| Fase CRISP-DM | Librería exigida | Estado |
+|---|---|---|
+| Fase 2 — EDA | `dplyr` | ✅ Usado |
+| Fase 2 — EDA | `ggplot2` | ✅ Integrado |
+| Fase 2 — EDA | `summarytools` | ✅ Integrado |
+| Fase 3 — Wrangling | `tidyverse` | ✅ Usado |
+| Fase 3 — Wrangling | `dplyr` | ✅ Usado |
+| Fase 3 — Wrangling | `stringr` | ✅ Integrado |
+| Fase 3 — Wrangling | `tidyr` | ✅ Usado |

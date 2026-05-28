@@ -148,17 +148,31 @@ Datos crudos (CSV/Excel)
 La pestaña **F2 - EDA** presenta:
 
 - **Resumen estadístico:** min, máx, promedio y mediana de Revenue, Quantity y Price.
-- **Distribución de Revenue:** histograma para ver concentración y outliers.
-- **Distribución de Cantidad:** volumen de unidades por transacción.
-- **Heatmap Hora × Día de la semana:** identifica franjas horarias de mayor actividad.
-- **Revenue por segmento de precio en el tiempo:** tendencia por categoría de producto.
+- **Distribución de Revenue:** histograma interactivo con Plotly para ver concentración y outliers.
+- **Distribución de Cantidad:** volumen de unidades por transacción (Plotly).
+- **Heatmap Hora × Día de la semana:** identifica franjas horarias de mayor actividad (Plotly).
+- **Revenue por segmento de precio en el tiempo:** tendencia por categoría de producto (Plotly).
 - **Top 10 países:** cuáles generan más ingresos.
+- **Histograma de Revenue con ggplot2:** visualización estática hasta el percentil 95, usando `geom_histogram()`.
+- **Boxplot de Revenue por Segmento con ggplot2:** distribución y outliers por categoría de precio, usando `geom_boxplot()`.
+- **Resumen descriptivo con summarytools:** `dfSummary()` sobre Revenue, Quantity, Price y Segmento_Precio — muestra frecuencias, estadísticas y valores válidos por variable.
+
+### Herramientas de visualización usadas en EDA
+
+| Herramienta | Tipo de gráfico | Librería |
+|---|---|---|
+| Histograma Revenue | Interactivo | plotly |
+| Histograma Revenue | Estático | ggplot2 |
+| Boxplot por Segmento | Estático | ggplot2 |
+| Heatmap Hora×Día | Interactivo | plotly |
+| Resumen estadístico | Texto descriptivo | summarytools |
 
 ### Hallazgos típicos
 
 - Las ventas tienen picos en **horas de oficina (9 am – 3 pm)** y los **martes y jueves**.
 - La mayoría del revenue proviene de productos en los segmentos **Estándar y Premium**.
 - El **Reino Unido** concentra la mayor parte de las ventas.
+- El revenue tiene una distribución **fuertemente sesgada a la derecha** (visible en histograma y boxplot).
 
 ------------------------------------------------------------------------
 
@@ -172,6 +186,15 @@ La pestaña **F3 - Wrangling** muestra de forma transparente todo el proceso de 
 - Distribución por segmentos de precio para validar la segmentación.
 
 **Dato clave:** las cancelaciones representan aproximadamente el **5% del total** de facturas y se excluyen del análisis de ventas.
+
+### Librerías de Data Wrangling usadas
+
+| Librería | Función usada | Propósito |
+|---|---|---|
+| `stringr` | `str_detect(Invoice, "^C")` | Detectar facturas con prefijo de cancelación |
+| `dplyr` | `filter()`, `mutate()`, `group_by()`, `summarise()` | Filtrado y transformación de datos |
+| `tidyr` | `pivot_wider()` | Pivotado de la matriz de confusión |
+| `lubridate` | `year()`, `month()`, `quarter()`, `wday()`, `hour()` | Extracción de componentes temporales |
 
 ------------------------------------------------------------------------
 
@@ -291,12 +314,15 @@ Visualiza los 4 casos posibles de clasificación: - **Verdadero Positivo (VP):**
 |----|----|----|
 | **Framework web** | `shiny`, `shinydashboard` | App web interactiva |
 | **Machine Learning** | `caret`, `randomForest`, `pROC` | Modelado y evaluación |
-| **Visualización** | `plotly` | Gráficos interactivos |
+| **Visualización interactiva** | `plotly` | Gráficos interactivos (EDA, negocio, RFM) |
+| **Visualización estática** | `ggplot2` | Histograma y Boxplot en pestaña EDA |
+| **Estadística descriptiva** | `summarytools` | `dfSummary()` en pestaña EDA |
 | **Tablas** | `DT` (DataTables) | Tablas dinámicas con filtros |
-| **Manipulación** | `dplyr`, `tidyr` | Transformación de datos |
-| **Fechas** | `lubridate` | Parsing y operaciones de fechas |
-| **Formatos** | `scales` | Formato de números y monedas |
-| **Lectura** | `readxl` | Lectura de archivos Excel |
+| **Manipulación** | `dplyr`, `tidyr` | Transformación y pivotado de datos |
+| **Texto y patrones** | `stringr` | Detección de cancelaciones con `str_detect()` |
+| **Fechas** | `lubridate` | Parsing y extracción de componentes de fecha |
+| **Formatos** | `scales` | Formato de números y monedas (£) |
+| **Lectura** | `readxl` | Lectura de archivos Excel (.xlsx) |
 
 ------------------------------------------------------------------------
 

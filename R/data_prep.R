@@ -88,7 +88,7 @@ limpiar_datos <- function(raw) {
     dplyr::distinct() %>%
     # Filtrar valores inválidos
     dplyr::filter(
-      !grepl("^C", Invoice),           # Excluir cancelaciones
+      !stringr::str_detect(Invoice, "^C"), # Excluir cancelaciones
       Quantity > 0,                    # Cantidad positiva
       Price > 0,                       # Precio positivo
       !is.na(CustomerID),              # CustomerID válido
